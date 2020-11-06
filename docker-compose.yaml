@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+  mysql:
+    build: ./database
+    image: mysql-image:latest
+    container_name: mysql-container
+    ports:
+    - target: 3306
+      published: 3306
+      protocol: tcp
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      #MYSQL_DATABASE: ${DB}
+     
+
+  frontend:
+    build: ./frontend
+    image: frontend:latest
+    container_name: frontend-container
+    ports:
+    - target: 5000
+      published: 5000
+      protocol: tcp
+    depends_on:
+      - backend
+     
+  backend:
+    build: ./backend
+    image: backend:latest
+    container_name: backend-container
+    ports:
+    - target: 5001
+      published: 5001
+      protocol: tcp
+    environment:
+    # TEST_DATABASE_URI: ${TEST_DATABASE_URI}
+      DATABASE_URI: ${DATABASE_URI}
+      SECRET_KEY: ${SECRET_KEY}
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+    depends_on:
+      - frontend 
