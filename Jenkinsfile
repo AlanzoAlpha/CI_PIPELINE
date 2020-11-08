@@ -1,6 +1,6 @@
 pipeline{
-        agent any
-        environment {
+        //agent any
+        //environment {
         }
         stages{
             stage('clone my repo'){
