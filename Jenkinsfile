@@ -8,8 +8,8 @@ pipeline{
                     sh '''
                     ssh ubuntu@52.17.67.226 <<EOF
                     //install git 
-		    //sudo apt update
-		    //sudo apt install -y git
+		    sudo apt update
+		    sudo apt install -y git
                     //Remove repository if exist
                     rm -rf cne-sfia2-brief
                     //Clone repository 
