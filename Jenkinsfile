@@ -28,7 +28,7 @@ pipeline{
 		    echo ${DATABASE_URI}
 		    echo ${SECRET_KEY}
 		    echo ${MYSQL_ROOT_PASSWORD}
-		    docker-compose up -d --build
+		    sudo docker-compose up -d --build
                     '''
 
                 }
