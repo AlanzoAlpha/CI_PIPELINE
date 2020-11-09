@@ -18,7 +18,7 @@ pipeline{
                 steps{
                     sh '''
                     echo "Yes it's done"
-		    sh "echo ${DB_PASSWORD}"
+		    "echo ${DB_PASSWORD}"
                     '''
 
                 }
