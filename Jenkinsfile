@@ -1,7 +1,7 @@
 pipeline{
         agent any
         environment {
-		DB_PASSWORD=credentials('DATABASE_URI')
+		DATABASE_URI=credentials('DATABASE_URI')
         }
         stages{
             stage('clone my repo'){
@@ -18,7 +18,7 @@ pipeline{
                 steps{
                     sh '''
                     echo "Yes it's done"
-		    "echo ${DB_PASSWORD}"
+		    echo ${DATABASE_URI}
                     '''
 
                 }
