@@ -1,7 +1,8 @@
 pipeline{
         agent any
-        //environment {
-        //}
+        environment {
+		DB_PASSWORD=credentials('DATABASE_PASSWORD')
+        }
         stages{
             stage('clone my repo'){
                 steps{
@@ -13,10 +14,11 @@ pipeline{
                 }
             }
        
-            stage('Software Installation'){
+            stage('Build'){
                 steps{
                     sh '''
                     echo "Yes it's done"
+		    sh "echo ${DB_PASSWORD}"
                     '''
 
                 }
