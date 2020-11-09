@@ -2,6 +2,9 @@ pipeline{
         agent any
         environment {
 		DATABASE_URI=credentials('DATABASE_URI')
+		MYSQL_ROOT_PASSWORD=credentials('MYSQL_ROOT_PASSWORD')
+		SECRET_KEY=credentials('SECRET_KEY')
+		
         }
         stages{
             stage('clone my repo'){
@@ -17,8 +20,15 @@ pipeline{
             stage('Build'){
                 steps{
                     sh '''
+		    cd cne-sfia2-brief
+		    export DATABASE_URI=${DATABASE_URI}
+                    export SECRET_KEY=${SECRET_KEY}
+                    export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
                     echo "Yes it's done"
 		    echo ${DATABASE_URI}
+		    echo ${SECRET_KEY}
+		    echo ${MYSQL_ROOT_PASSWORD}
+		    docker-compose up -d --build
                     '''
 
                 }
