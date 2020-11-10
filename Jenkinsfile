@@ -26,7 +26,7 @@ pipeline{
 		    echo ${TEST_DATABASE_URI}
 		    pytest test_backend.py
 		    pytest test_frontend.py
-		    pytest --cov application
+		    
                     '''
 
                 }
