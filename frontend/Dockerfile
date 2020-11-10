@@ -1,5 +1,7 @@
 #Use Python Image
 FROM python:3.7
+#Make directory and store it image name "app"
+WORKDIR /app
 # Install apt dependencies
 
 # Copy contents into image
