@@ -18,7 +18,18 @@ pipeline{
                 }
             }
             
-            
+            stage('Test'){
+                steps{
+                    sh '''
+		    cd cne-sfia2-brief
+		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
+		    echo ${TEST_DATABASE_URI}
+		    pytest test_frontend.py
+		    pytest --cov application
+                    '''
+
+                }
+            }
             stage('Build'){
                 steps{
                     sh '''
@@ -35,17 +46,7 @@ pipeline{
 
                 }
             }
-            stage('Test'){
-                steps{
-                    sh '''
-		    cd cne-sfia2-brief
-		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
-		    echo ${TEST_DATABASE_URI}
-		    pytest
-		    pytest --cov application
-                    '''
-
-                }
-            }
+           
+            
       }
 }
