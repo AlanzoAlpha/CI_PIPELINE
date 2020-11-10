@@ -24,7 +24,6 @@ pipeline{
 		    cd cne-sfia2-brief
 		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
 		    echo ${TEST_DATABASE_URI}
-		    sudo pip3 install pytest -y
 		    pytest
 		    pytest --cov application
                     '''
