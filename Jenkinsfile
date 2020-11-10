@@ -26,7 +26,8 @@ pipeline{
 		    echo ${TEST_DATABASE_URI}
 		    cd backend
 		    pip3 install -r requirements.txt
-		   
+		    pytest 
+		    pytest --cov application
 		    cd ~/cne-sfia2-brief/frontend
 		    pytest 
 		    pytest --cov application
