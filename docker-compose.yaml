@@ -33,7 +33,7 @@ services:
       published: 5001
       protocol: tcp
     environment:
-    # TEST_DATABASE_URI: ${TEST_DATABASE_URI}
+      TEST_DATABASE_URI: ${TEST_DATABASE_URI}
       DATABASE_URI: ${DATABASE_URI}
       SECRET_KEY: ${SECRET_KEY}
     depends_on:
