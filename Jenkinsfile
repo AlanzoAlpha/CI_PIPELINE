@@ -4,6 +4,7 @@ pipeline{
 		DATABASE_URI=credentials('DATABASE_URI')
 		MYSQL_ROOT_PASSWORD=credentials('MYSQL_ROOT_PASSWORD')
 		SECRET_KEY=credentials('SECRET_KEY')
+		TEST_DATABASE_URI=credentials('TEST_DATABASE_URI')
 		
         }
         stages{
@@ -16,7 +17,19 @@ pipeline{
                     
                 }
             }
-       
+            
+            stage('Test'){
+                steps{
+                    sh '''
+		    cd cne-sfia2-brief
+		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
+		    echo ${TEST_DATABASE_URI}
+		    pytest
+		    pytest --cov application
+                    '''
+
+                }
+            }
             stage('Build'){
                 steps{
                     sh '''
