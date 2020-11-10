@@ -24,8 +24,9 @@ pipeline{
 		    cd cne-sfia2-brief
 		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
 		    echo ${TEST_DATABASE_URI}
-		    py.test pytest
-		    py.test pytest --cov application
+		    pytest test_backend.py
+		    pytest test_frontend.py
+		    pytest --cov application
                     '''
 
                 }
