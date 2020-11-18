@@ -1,5 +1,5 @@
 ---
-- hosts: 127.0.0.1
+- hosts: all
   become: true
   vars:
     CTOP_VERSION: "0.7.3"
@@ -12,32 +12,45 @@
       - software-properties-common
     USER: "ubuntu"
   tasks:
-  - name: 'Installing Openjdk, openjdk-8-jdk, python3.8, python3-pip, mysql-client-core-5.7'
+  - name: Installing openjdk-8-jdk
     apt:
-      pkg:
-      - openjdk-8-jdk
-      - python3.8
-      - python3-pip
-      - mysql-client-core-5.7
-      state: present
+      name: openjdk-8-jdk
+      state: latest
       update_cache: true
-  
+
+  - name: Installing python3.8
+    apt:
+      name: python3.8
+      state: latest
+      update_cache: true
+
+  - name: Installing python3-pip
+    apt:
+      name: python3.8
+      state: latest
+      update_cache: true
+  - name: Installing mysql-client-core-5.7
+    apt:
+      name: mysql-client-core-5.7
+      state: latest
+      update_cache: true
+
   - name: install wget
     apt:
       name: wget
       state: present
 
-  - name: 'Download jenkins.repo'
-    get_url: 
-      url: https://pkg.jenkins.io/debian-stable
-      dest: /etc/apt/sources.list.d/jenkins.list
-
-  - name: 'Import Jenkins Key'
-    rpm_key:
+  - name: Import Jenkins Key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
       state: present
-      key: https://pkg.jenkins.io/debian-stable/jenkins.io.key
 
-  - name: 'Install Jenkins'
+  - name: Download and configure jenkins repo
+    apt_repository:
+      repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+      state: present
+
+  - name: Install Jenkins
     apt:
       name: jenkins
       state: present
@@ -49,19 +62,19 @@
       state: started
       enabled: true
 
-  - name: 'Sleep for 30 seconds and continue with play'
+  - name: Wait for jenkins
     wait_for: timeout=30
 
-  - name: 'Get init password Jenkins'
+  - name: Get init password Jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     changed_when: false
     register: result
 
-  - name: 'Print init password Jenkins'
+  - name: Print init password Jenkins
     debug:
       var: result.stdout
 
-  - name: 'install docker dependencies'
+  - name: install docker dependencies
     apt:
       name: "{{item}}"
       state: present
@@ -76,17 +89,17 @@
         - python3-setuptools
         - virtualenv
 
-  - name: 'add docker GPG apt key'
+  - name: add docker GPG apt key
     apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
 
-  - name: 'add docker repository'
+  - name: add docker repository
     apt_repository:
       repo: deb https://download.docker.com/linux/ubuntu bionic stable
       state: present
-        
-  - name: 'install docker'
+
+  - name: install docker
     apt:
       name: "{{item}}"
       state: latest
@@ -96,44 +109,45 @@
         - docker-ce-cli
         - containerd.io
 
-  - name: 'start docker'
+  - name: start docker
     service:
       name: docker
       state: started
       enabled: yes
 
-  - name: 'Test Docker with hello world example'
+
+  - name: test Docker with hello world example
     shell: "docker run hello-world"
     register: hello_world_output
 
-  - name: 'Show output of hello word example'
+  - name: show output of hello word example
     debug:
       msg: "Container Output: {{hello_world_output.stdout}}"
 
-  - name: 'Create docker group'
+  - name: create docker group
     group:
       name: "docker"
       state: present
 
-  - name: 'Adding user {{ USER }} to docker group'  
+  - name: adding user {{ USER }} to docker group
     user:
       name: "{{ USER }}"
       groups: "docker"
       append: "yes"
 
-  - name: 'Install Docker Compose'
+  - name: install Docker Compose
     get_url:
       url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
       dest: "/usr/local/bin/docker-compose"
       mode: 0755
 
-  - name: 'Install Ctop'
+  - name: install Ctop
     get_url:
       url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
       dest: "/usr/local/bin/ctop"
       mode: 0755
 
-  - name: 'Reboot server in order for changes to take place'
+  - name: reboot server in order for changes to take place
     shell: "sleep 1 && reboot"
     async: 1
     poll: 0
@@ -143,4 +157,3 @@
     service:
       name: docker
       state: restarted
-
