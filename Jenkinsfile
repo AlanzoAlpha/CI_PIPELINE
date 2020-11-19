@@ -52,8 +52,11 @@ pipeline{
 		    cd ~/cne-sfia2-brief
 		    echo "BACKEND TEST"
 		    docker exec backend bash -c "pytest tests/ --cov application"
+		    docker exec backend bash -c "pytest tests/ --cov application" >> backend_test_coverage.txt
 		    echo "FRONTEND TEST TEST"
 		    docker exec frontend bash -c "pytest tests/ --cov application"
+		    docker exec frontend bash -c "pytest tests/ --cov application" >> frontend_test_coverage.txt
+
                     '''
 
                 }
