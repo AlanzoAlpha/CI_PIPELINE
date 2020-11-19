@@ -3,7 +3,7 @@ services:
   mysql:
     build: ./database
     image: mysql-image:latest
-    container_name: mysql-container
+    container_name: mysql
     ports:
     - target: 3306
       published: 3306
@@ -16,7 +16,7 @@ services:
   frontend:
     build: ./frontend
     image: frontend:latest
-    container_name: frontend-container
+    container_name: frontend
     ports:
     - target: 5000
       published: 5000
@@ -27,7 +27,7 @@ services:
   backend:
     build: ./backend
     image: backend:latest
-    container_name: backend-container
+    container_name: backend
     ports:
     - target: 5001
       published: 5001
@@ -41,7 +41,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: nginx-container
+    container_name: nginx
     ports:
     - target: 80
       published: 80
