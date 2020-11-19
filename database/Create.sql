@@ -1,3 +1,7 @@
+
+DROP TABLE IF EXISTS testdb;
+DROP TABLE IF EXISTS users;
+
 CREATE DATABASE testdb;
 CREATE DATABASE users;
 USE users;
