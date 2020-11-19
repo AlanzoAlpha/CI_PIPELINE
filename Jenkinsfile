@@ -6,7 +6,7 @@ pipeline{
 		SECRET_KEY=credentials('SECRET_KEY')
 		TEST_DATABASE_URI=credentials('TEST_DATABASE_URI')
                 USER_DB_ENDPOINT=credentials('USER_DB_ENDPOINT')
-                USER_DB_ENDPOINT=credentials('USER_DB_ENDPOINT')
+                TEST_DB_ENDPOINT=credentials('TEST_DB_ENDPOINT')
                 USERNAME=credentials('USERNAME')
                 PASSWORD=credentials('PASSWORD')
 		
