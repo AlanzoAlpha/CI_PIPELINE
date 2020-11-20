@@ -35,7 +35,7 @@ pipeline{
                     cd cne-sfia2-brief/database
                     mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
                     cd ..
-		    sudo docker-compose up -d --build
+		    docker-compose up -d --build
                     '''
                 }
             }
