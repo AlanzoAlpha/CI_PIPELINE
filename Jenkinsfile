@@ -36,6 +36,7 @@ pipeline{
                     mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
                     cd ..
 		    sudo docker-compose up -d --build
+		    sudo curl localhost:80
                     '''
                 }
             }
@@ -44,6 +45,8 @@ pipeline{
                     sh '''
 		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
                     export TEST_DB_ENDPOINT=${USER_DB_ENDPOINT}
+		    export SECRET_KEY=${SECRET_KEY}
+                    export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
                     echo ${USER_DB_ENDPOINT}
 		    echo ${TEST_DATABASE_URI}
 		    cd cne-sfia2-brief/database
