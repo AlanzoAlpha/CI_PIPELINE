@@ -8,7 +8,6 @@ pipeline{
                 USER_DB_ENDPOINT=credentials('USER_DB_ENDPOINT')
                 TEST_DB_ENDPOINT=credentials('TEST_DB_ENDPOINT')
                 USERNAME=credentials('USERNAME')
-                PASSWORD=credentials('PASSWORD')
 		
         }
         stages{
@@ -48,7 +47,7 @@ pipeline{
                     echo ${USER_DB_ENDPOINT}
 		    echo ${TEST_DATABASE_URI}
 		    cd ~/cne-sfia2-brief/database
-		    mysql -h ${TEST_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${PASSWORD} < Create.sql
+		    mysql -h ${TEST_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
 		    cd ~/cne-sfia2-brief
 		    echo "BACKEND TEST"
 		    docker exec backend bash -c "pytest tests/ --cov application"
