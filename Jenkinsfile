@@ -50,11 +50,11 @@ pipeline{
 		    mysql -h ${TEST_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
 		    cd ..
 		    echo "BACKEND TEST"
-		    docker exec backend bash -c "pytest tests/ --cov application"
-		    docker exec backend bash -c "pytest tests/ --cov application" >> backend_test_coverage.txt
+		    sudo docker exec backend bash -c "pytest tests/ --cov application"
+		    sudo docker exec backend bash -c "pytest tests/ --cov application" >> backend_test_coverage.txt
 		    echo "FRONTEND TEST TEST"
-		    docker exec frontend bash -c "pytest tests/ --cov application"
-		    docker exec frontend bash -c "pytest tests/ --cov application" >> frontend_test_coverage.txt
+		    sudo docker exec frontend bash -c "pytest tests/ --cov application"
+		    sudo docker exec frontend bash -c "pytest tests/ --cov application" >> frontend_test_coverage.txt
 
                     '''
 
