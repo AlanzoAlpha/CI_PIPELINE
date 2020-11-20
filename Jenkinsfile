@@ -32,9 +32,9 @@ pipeline{
 		    echo ${SECRET_KEY}
 		    echo ${MYSQL_ROOT_PASSWORD}
 		    echo ${USERNAME}
-                    cd ~/cne-sfia2-brief/database
+                    cd cne-sfia2-brief/database
                     mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
-                    cd ~/cne-sfia2-brief
+                    cd ..
 		    sudo docker-compose up -d --build
                     '''
                 }
@@ -46,9 +46,9 @@ pipeline{
                     export TEST_DB_ENDPOINT=${USER_DB_ENDPOINT}
                     echo ${USER_DB_ENDPOINT}
 		    echo ${TEST_DATABASE_URI}
-		    cd ~/cne-sfia2-brief/database
+		    cd cne-sfia2-brief/database
 		    mysql -h ${TEST_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
-		    cd ~/cne-sfia2-brief
+		    cd ..
 		    echo "BACKEND TEST"
 		    docker exec backend bash -c "pytest tests/ --cov application"
 		    docker exec backend bash -c "pytest tests/ --cov application" >> backend_test_coverage.txt
