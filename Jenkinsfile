@@ -24,6 +24,7 @@ pipeline{
             stage('Build'){
                 steps{
                     sh '''
+		    sudo systemctl stop nginx
 		    //export DATABASE_URI=${DATABASE_URI}
 		    export DATABASE_URI=mysql+pymysql://admin:password@terraform-20201121201447420600000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/users
                     //export SECRET_KEY=${SECRET_KEY}
