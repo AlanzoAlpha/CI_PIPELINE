@@ -30,7 +30,7 @@ pipeline{
                     echo "//export SECRET_KEY=${SECRET_KEY}"
 		    export SECRET_KEY=password
                     echo "//export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-		    export MYSQL_ROOT_PASSWORD=pasword
+		    export MYSQL_ROOT_PASSWORD=password
 		    echo "//export USERNAME=${USERNAME}"
 		    echo "//export USERNAME=admin"
 		    echo ${DATABASE_URI}
