@@ -25,9 +25,11 @@ pipeline{
                 steps{
                     sh '''
 		    sudo systemclt start nginx
-		    export DATABASE_URI=${DATABASE_URI}
-                    export SECRET_KEY=${SECRET_KEY}
-                    export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+		    //export DATABASE_URI=${DATABASE_URI}
+		    export DATABASE_URI=mysql+pymysql://admin:password@terraform-20201121201447420600000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/users
+                    //export SECRET_KEY=${SECRET_KEY}
+		    export SECRET_KEY=password
+                    export MYSQL_ROOT_PASSWORD=password
 		    export USERNAME=${USERNAME}
 		    echo ${DATABASE_URI}
 		    echo ${SECRET_KEY}
