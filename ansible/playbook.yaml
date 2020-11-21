@@ -1,0 +1,159 @@
+---
+- hosts: all
+  become: true
+  vars:
+    CTOP_VERSION: "0.7.3"
+    DOCKER_COMPOSE_VERSION: "1.25.1"
+    DOCKER_PACKAGES:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    USER: "ubuntu"
+  tasks:
+  - name: Installing openjdk-8-jdk
+    apt:
+      name: openjdk-8-jdk
+      state: latest
+      update_cache: true
+
+  - name: Installing python3.8
+    apt:
+      name: python3.8
+      state: latest
+      update_cache: true
+
+  - name: Installing python3-pip
+    apt:
+      name: python3.8
+      state: latest
+      update_cache: true
+  - name: Installing mysql-client-core-5.7
+    apt:
+      name: mysql-client-core-5.7
+      state: latest
+      update_cache: true
+
+  - name: install wget
+    apt:
+      name: wget
+      state: present
+
+  - name: Import Jenkins Key
+    apt_key:
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+      state: present
+
+  - name: Download and configure jenkins repo
+    apt_repository:
+      repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+      state: present
+
+  - name: Install Jenkins
+    apt:
+      name: jenkins
+      state: present
+      update_cache: true
+
+  - name: 'Start & Enable Jenkins'
+    systemd:
+      name: jenkins
+      state: started
+      enabled: true
+
+  - name: Wait for jenkins
+    wait_for: timeout=30
+
+  - name: Get init password Jenkins
+    shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+    changed_when: false
+    register: result
+
+  - name: Print init password Jenkins
+    debug:
+      var: result.stdout
+
+  - name: install docker dependencies
+    apt:
+      name: "{{item}}"
+      state: present
+      update_cache: yes
+    loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+        - python3-pip
+        - python3-setuptools
+        - virtualenv
+
+  - name: add docker GPG apt key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: add docker repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+
+  - name: install docker
+    apt:
+      name: "{{item}}"
+      state: latest
+      update_cache: yes
+    loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+  - name: start docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+
+  - name: test Docker with hello world example
+    shell: "docker run hello-world"
+    register: hello_world_output
+
+  - name: show output of hello word example
+    debug:
+      msg: "Container Output: {{hello_world_output.stdout}}"
+
+  - name: create docker group
+    group:
+      name: "docker"
+      state: present
+
+  - name: adding user {{ USER }} to docker group
+    user:
+      name: "{{ USER }}"
+      groups: "docker"
+      append: "yes"
+
+  - name: install Docker Compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
+      dest: "/usr/local/bin/docker-compose"
+      mode: 0755
+
+  - name: install Ctop
+    get_url:
+      url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
+      dest: "/usr/local/bin/ctop"
+      mode: 0755
+
+  - name: reboot server in order for changes to take place
+    shell: "sleep 1 && reboot"
+    async: 1
+    poll: 0
+
+  handlers:
+  - name: 'restart docker'
+    service:
+      name: docker
+      state: restarted

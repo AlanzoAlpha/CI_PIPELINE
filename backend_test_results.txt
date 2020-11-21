@@ -1,0 +1,25 @@
+============================= test session starts ==============================
+platform linux -- Python 3.7.9, pytest-6.0.1, py-1.9.0, pluggy-0.13.1
+rootdir: /app
+plugins: cov-2.10.0
+collected 1 item
+
+tests/test_backend.py .                                                  [100%]
+
+=============================== warnings summary ===============================
+/usr/local/lib/python3.7/site-packages/flask/_compat.py:139
+  /usr/local/lib/python3.7/site-packages/flask/_compat.py:139: DeprecationWarning: 'flask.json_available' is deprecated and will be removed in version 2.0.0.
+    self._warn()
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+
+----------- coverage: platform linux, python 3.7.9-final-0 -----------
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+application/__init__.py       9      0   100%
+application/models.py         6      0   100%
+application/routes.py        11      0   100%
+---------------------------------------------
+TOTAL                        26      0   100%
+
+========================= 1 passed, 1 warning in 0.66s =========================
