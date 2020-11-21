@@ -24,7 +24,7 @@ pipeline{
             stage('Build'){
                 steps{
                     sh '''
-		    sudo systemclt disable nginx
+		    sudo systemclt start nginx
 		    export DATABASE_URI=${DATABASE_URI}
                     export SECRET_KEY=${SECRET_KEY}
                     export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -35,7 +35,8 @@ pipeline{
 		    echo ${USERNAME}
                     cd cne-sfia2-brief/database
                     mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
-                    cd ..
+                    sudo systemctl stop nginx
+		    cd ..
 		    sudo docker-compose up -d --build
 		    sudo curl localhost:80
                     '''
