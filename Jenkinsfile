@@ -33,10 +33,7 @@ pipeline{
 		    export MYSQL_ROOT_PASSWORD=password
 		    echo "//export USERNAME=${USERNAME}"
 		    echo "//export USERNAME=admin"
-		    echo ${DATABASE_URI}
-		    echo ${SECRET_KEY}
-		    echo ${MYSQL_ROOT_PASSWORD}
-		    echo ${USERNAME}
+		   
                     cd cne-sfia2-brief/database
                     echo "//mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql"
 		    mysql -h terraform-20201121201447420600000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
