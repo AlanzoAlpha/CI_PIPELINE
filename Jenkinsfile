@@ -24,6 +24,7 @@ pipeline{
             stage('Build'){
                 steps{
                     sh '''
+		    sudo systemclt disable nginx
 		    export DATABASE_URI=${DATABASE_URI}
                     export SECRET_KEY=${SECRET_KEY}
                     export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
