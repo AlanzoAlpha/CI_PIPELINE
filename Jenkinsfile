@@ -1,16 +1,16 @@
 pipeline{
         agent any
-        environment {
+        /*environment {
 		//DATABASE_URI=credentials('DATABASE_URI')
 		//MYSQL_ROOT_PASSWORD=credentials('MYSQL_ROOT_PASSWORD')
 		//SECRET_KEY=credentials('SECRET_KEY')
 		//TEST_DATABASE_URI=credentials('TEST_DATABASE_URI')
                 //USER_DB_ENDPOINT=credentials('USER_DB_ENDPOINT')
                 //TEST_DB_ENDPOINT=credentials('TEST_DB_ENDPOINT')
-                noDOCKER_USERNAME=credentials('DOCKER_USERNAME')
+                //DOCKER_USERNAME=credentials('DOCKER_USERNAME')
 		DOCKER_PASSWORD=credentials('DOCKER_PASSWORD')
 		
-        }
+        } */
         stages{
             stage(' Jenkin Test'){
                 steps{
