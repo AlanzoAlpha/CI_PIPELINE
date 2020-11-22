@@ -40,7 +40,7 @@ pipeline{
 		    mysql -h terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
 		    mysql -h terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
                     cd ..
-		    docker-compose up -d 
+		    sudo docker-compose up -d 
 		    curl localhost:80
                     '''
                 }
