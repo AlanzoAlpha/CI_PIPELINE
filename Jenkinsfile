@@ -28,17 +28,17 @@ pipeline{
                     sh '''
 		    sudo systemctl disable nginx
 		    echo "//export DATABASE_URI=${DATABASE_URI}"
-		    sudo export DATABASE_URI=mysql+pymysql://admin:password@terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/users
+		    export DATABASE_URI="mysql+pymysql://admin:password@terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/users"
 		    echo "//export TEST_DATABASE_URI=${TEST_DATABASE_URI}"
-		    sudo export TEST_DATABASE_URI=mysql+pymysql://admin:password@terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/testdb
+		    export TEST_DATABASE_URI="mysql+pymysql://admin:password@terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/testdb"
                     echo "//export SECRET_KEY=${SECRET_KEY}"
-		    sudo export SECRET_KEY=password
+		    export SECRET_KEY="password"
                     echo "//export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-		    sudo export MYSQL_ROOT_PASSWORD=password
+		    export MYSQL_ROOT_PASSWORD="password"
                     cd cne-sfia2-brief/database
                     echo "//mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql"
-		    sudo mysql -h terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
-		    sudo mysql -h terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
+		    mysql -h "terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com" -P 3306 -u "admin" -p"password" < Create.sql
+		    mysql -h "terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com" -P 3306 -u "admin" -p"password" < Create.sql
                     cd ..
 		    sudo docker-compose up -d 
 		    sudo curl localhost:80
