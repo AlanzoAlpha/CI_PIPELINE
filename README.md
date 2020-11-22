@@ -1,24 +1,30 @@
-# QAC SFIA2 Project
+# CI Pipeline Project
 
-This application is a simple [Flask application](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application), ready to be deployed, for your SFIA2 project.
+Below is an overview of my project which entails a flaskapp with a get method in a CI pipeline. This document is to aid with the understanding of this project.
 
-The following information should be everything you need to complete the project.
+## Table of Content
+* [Objective](#Objective)
+   * [Requirements](#Requirements)
+   * [Application and Approach ](#Application and Approach)
+   * [Tools Used ](#Tools Used)
+* [Framework](#Framework)
+   * [Font-End Application](#Font-End Application)
+   * [Databases](#Databases)
+   * [Postman](#Postman)
+   * [Project Management](#Project Management)
+   * [Testing](#Testing)
+   * [Risk Assessment](#Risk Assessment)
+* [Known Issues](#Known-issues)
+* [Future Improvements](#Future-improvements)
+* [Authors](#Authors)
 
-## Brief
 
-The application must:
+## Objective
+The objective of this project is as outlined below:
 
-- Be deployed to a **Virtual Machine for testing**
-- Be deployed in a **managed Kubernetes Cluster for production**
-- Make use of a **managed Database solution**
+To set up a CI-pipeline that deploys a simple flask-app. The app should make use of terraform to build two data bases, one vm and one kubernete cluster. Folowing on ansible will install all the neccessary softwares onto the vm. Then jenkins will then deploy the app from github with webhook associated for updates. Using jenking the app is then pushed up to docker hub so that it can be deployed anywhere. I will then use kubernetes to deploy the app. 
 
-## Application
-
-The application is a Flask application running in **2 micro-services** (*frontend* and *backend*).  
-
-The database directory is available should you: 
-  - want to use a MySQL container for your database at any point, *or*
-  - want to make use of the `Create.sql` file to **set up and pre-populate your database**.
+The app is deploy with a deploy shell which automates the terafform infrastructure, and install software in the vms. 
 
 The application works by:
 1. The frontend service making a GET request to the backend service. 
@@ -40,35 +46,39 @@ An example of this would be:
 ```
 mysql+pymysql://root:password@mysql:3306/orders
 ```
+### Tools Used
+* Scripting Languages: 
+   * *Python*
+   * *Bash/Shell*
+   * *Yaml*
+   * *Hashicorp Configuration Language*
+   * *SQL*
+   * **
+   
+* Applications:
+   * *Jira Board*
+   * *GitHub*
+   * *AWS*
+   * *GCP*
+   * *Visual Studios Code*
+   * *Excel*
+   * *PyCharm*
 
-### Environment Variables
-
-The application makes use of **2 environment variables**:
-
-- `DATABASE_URI`: as described above
-- `SECRET_KEY`: any *random string* will work here
-
-### Running a Flask Application
-
-Typically, to run a Flask application, you would:
-
-1. Install the pip dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-2. Run the application:
-
-```
-python3 app.py
-```
-
+### Risk Assessment
+* A risk assessment was perform to analyse and mitigate all potential risk. A table is presented below outlining these risks. 
+ * *Risk Assessment*
+ <img src="Images/unittesting.png" width="800" height = "400">
+ 
+## Framework
+### Flask-app Process
+The images below shows the connections.
 ![app-diagram](https://i.imgur.com/wnbDazy.png)
 
-## Testing
-
-Unit Tests have been included for both the frontend and backend services.
+### CI Pipeline
+The following image shows CRUD operation on GCP MySQL database:
+* *CRUD*
+### Testing
+The tests are are done for  both the frontend and backend services.
 
 To test the backend service, you will need two things:
 
@@ -86,7 +96,7 @@ To generate a coverage report, you will need to run:
 ```
 pytest --cov application
 ```
-
+<img src="Images/unittesting.png" width="800" height = "400">
 ## Infrastructure
 
 The **Minimum Viable Product** for this project should at least demonstrate the following infrastructure diagram:
@@ -102,4 +112,6 @@ Completing the stretch goals should yield an infrastructure diagram similar to t
 
 ![stretch-digram](https://i.imgur.com/Q5zljVl.png)
 
-**Good luck!**
+## Known Issues
+When running a jenkins file which has variables exported. You will need to mitigate special charaters please see GitHub.  
+
