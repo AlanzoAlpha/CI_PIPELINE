@@ -48,6 +48,7 @@ An example of this would be:
 mysql+pymysql://root:password@mysql:3306/orders
 ```
 The images below shows the connections.
+
 ![app-diagram](https://i.imgur.com/wnbDazy.png)
 
 ### Application Approach
