@@ -1,18 +1,19 @@
 pipeline{
         agent any
-        /*environment {
-		//DATABASE_URI=credentials('DATABASE_URI')
-		//MYSQL_ROOT_PASSWORD=credentials('MYSQL_ROOT_PASSWORD')
-		//SECRET_KEY=credentials('SECRET_KEY')
-		//TEST_DATABASE_URI=credentials('TEST_DATABASE_URI')
-                //USER_DB_ENDPOINT=credentials('USER_DB_ENDPOINT')
-                //TEST_DB_ENDPOINT=credentials('TEST_DB_ENDPOINT')
-                //DOCKER_USERNAME=credentials('DOCKER_USERNAME')
+        environment {
+		DATABASE_URI=credentials('DATABASE_URI')
+		MYSQL_ROOT_PASSWORD=credentials('MYSQL_ROOT_PASSWORD')
+		ECRET_KEY=credentials('SECRET_KEY')
+		EST_DATABASE_URI=credentials('TEST_DATABASE_URI')
+                USER_DB_ENDPOINT=credentials('USER_DB_ENDPOINT')
+                EST_DB_ENDPOINT=credentials('TEST_DB_ENDPOINT')
+                DOCKER_USERNAME=credentials('DOCKER_USERNAME')
 		DOCKER_PASSWORD=credentials('DOCKER_PASSWORD')
+		DOCKER_USERNAME=credentials('DOCKER_USERNAME')
 		
-        } */
+        }
         stages{
-            stage(' Jenkin Test'){
+            stage('Jenkin Test'){
                 steps{
                     sh '''
 		    rm -rf cne-sfia2-brief
@@ -27,32 +28,27 @@ pipeline{
                 steps{
                     sh '''
 		    sudo systemctl disable nginx
-		    echo "//export DATABASE_URI=${DATABASE_URI}"
-		    export 'DATABASE_URI=mysql+pymysql://admin:password@terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/users'
-		    echo "//export TEST_DATABASE_URI=${TEST_DATABASE_URI}"
-		    export 'TEST_DATABASE_URI=mysql+pymysql://admin:password@terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/testdb'
-                    echo "//export SECRET_KEY=${SECRET_KEY}"
-		    export 'SECRET_KEY=password'
-                    echo "//export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-		    export 'MYSQL_ROOT_PASSWORD=assword'
+		    export DATABASE_URI=${DATABASE_URI}
+		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
+                    export SECRET_KEY=${SECRET_KEY}
+                    export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
                     cd cne-sfia2-brief/database
-                    echo "//mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql"
-		    mysql -h terraform-20201122122526247700000008.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
-		    mysql -h terraform-20201122122526241000000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com -P 3306 -u admin -ppassword < Create.sql
+                    mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
+                    mysql -h ${TEST_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
                     cd ..
 		    sudo docker-compose up -d --build 
 		    sudo curl localhost:80
                     '''
                 }
             }
-	   /* stage('Docker Push '){
+	   stage('Docker Push '){
                 steps{
                     sh '''
 		    sudo docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-		    sudo docker push ${DOCKER_USERNAME}/
-		    sudo docker push ${DOCKER_USERNAME}/
-		    sudo docker push ${DOCKER_USERNAME}/
-		    sudo docker push ${DOCKER_USERNAME}/
+		    sudo docker push ${DOCKER_USERNAME}/frontend
+		    sudo docker push ${DOCKER_USERNAME}/backend
+		    sudo docker push ${DOCKER_USERNAME}/mysql-image
+		    sudo docker push ${DOCKER_USERNAME}/nginx
                     '''
 
                 }
@@ -61,33 +57,31 @@ pipeline{
                 steps{
                     sh '''
 		    cd ~/cne-sfia2-brief
-		    cd ..
 		    echo "BACKEND TEST"
 		    sudo docker exec backend bash -c "pytest tests/ --cov application"
-		    echo "//sudo docker exec backend bash -c "pytest tests/ --cov application" >> backend_test_coverage.txt"
+		    sudo docker exec backend bash -c "pytest tests/ --cov application" >> backend_test_coverage.txt
 		    echo "FRONTEND TEST"
 		    sudo docker exec frontend bash -c "pytest tests/ --cov application"
-		    echo "//sudo docker exec frontend bash -c "pytest tests/ --cov application" >> frontend_test_coverage.txt"
+		    sudo docker exec frontend bash -c "pytest tests/ --cov application" >> frontend_test_coverage.txt
                     echo "Done"
                     '''
 
                 }
             }
-            /*stage('Test'){
+            stage('Kubes'){
                 steps{
                     sh '''
 		    cd ~/cne-sfia2-brief/
-		    kubectl apply -f secrets.yaml
-		    kubectl apply -f deploy 
-		    kubectl apply -f configmap.yaml
-		    kubectl apply -f frontend.yaml
-		    kubectl apply -f backend.yaml
-		    kubectl apply -f mysql.yaml
+		    echo "kubectl apply -f secrets.yaml ingnore this line"
+		    sudo kubectl apply -f deploy 
+		    sudo kubectl apply -f configmap.yaml
+		    sudo kubectl apply -f frontend.yaml
+		    sudo kubectl apply -f backend.yaml
+		    sudo kubectl apply -f mysql.yaml
                     echo "Done"
                     '''
 
                 }
-            }
-           */     
+	   }    
       }
 }
