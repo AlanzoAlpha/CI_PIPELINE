@@ -13,5 +13,5 @@ cd ~/cne-sfia2-brief/ansible
 ansible-playbook -i ${ip}, playbook.yaml
 
 sleep 60
-ssh StrictHostKeyChecking accept-new ubuntu@${ip}
+ssh -tt -i /home/ubuntu/.ssh/id_rsa ubuntu@${ip}
 
