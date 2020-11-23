@@ -73,7 +73,7 @@ pipeline{
                     sh '''
 		    cd ~/cne-sfia2-brief/
 		    echo "kubectl apply -f secrets.yaml ingnore this line"
-		    sudo kubectl apply -f deploy 
+		    sudo kubectl apply -f deployment.yaml 
 		    sudo kubectl apply -f configmap.yaml
 		    sudo kubectl apply -f frontend.yaml
 		    sudo kubectl apply -f backend.yaml
