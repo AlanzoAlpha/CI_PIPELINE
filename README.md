@@ -81,7 +81,7 @@ The **Minimum Viable Product** for this project should at least demonstrate the 
 ### Flask-app Process One, Terraform
 Terraform is use to launch one vm, two databases, and one ekc.
 
-<img src="images/terraform.png" width="800" height = "400">
+<img src="images/terraform.png" width="600" height = "300">
 
 ### Flask-app Process Two, Ansible
 Ansible is used to install all the neccessary software on the vm including jenkins.
@@ -91,18 +91,22 @@ Ansible is used to install all the neccessary software on the vm including jenki
 
 ### Flask-app Process Three, Docker Build on Jenkines Pipeline
 Result
+
 <img src="images/result1.png" width="800" height = "400">
 
 Doker Push
+
 <img src="images/dockers.png" width="800" height = "400">
 
 ### Flask-app Process Four, Testing on Jenkines Pipeline
 The tests are are done for  both the frontend and backend services.
 
 Frontend 
+
 <img src="images/backend _test.png" width="800" height = "400">
 
 Backend
+
 <img src="images/backend _test.png" width="800" height = "400">
 
 ### Flask-app Process Five, Run Kubernete Pods
@@ -110,11 +114,13 @@ Backend
 ###Project Management
 A Jira Board was used to tract this project. It has the capability for monitoring, project collaboration and, project planning and management. The image below shows all my panning and processes.
 Jira Board
-<img src="images/jira.png" width="800" height = "400">
+
+<img src="images/jira.png" width="600" height = "300">
 
 ### Risk Assessment
 A risk assessment was perform to analyse and mitigate all potential risk. A table is presented below outlining these risks. 
 Risk Assessment
+
 <img src="Images/risk.png" width="800" height = "400">
 
 ## Known Issues
