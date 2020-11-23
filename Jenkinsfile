@@ -27,7 +27,16 @@ pipeline{
             stage('Docker Build'){
                 steps{
                     sh '''
-
+                    sudo systemctl disable nginx
+		    export DATABASE_URI=${DATABASE_URI}
+		    export TEST_DATABASE_URI=${TEST_DATABASE_URI}
+                    export SECRET_KEY=${SECRET_KEY}
+                    export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                    cd cne-sfia2-brief/database
+                    mysql -h ${USER_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
+                    mysql -h ${TEST_DB_ENDPOINT} -P 3306 -u ${USERNAME} -p${MYSQL_ROOT_PASSWORD} < Create.sql
+                    cd ..
+		    sudo docker-compose up -d --build
 		    sudo curl localhost:80
                     '''
                 }
