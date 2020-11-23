@@ -53,8 +53,11 @@ variable "outbound_port" {
   default     = 0
 }
 
-variable "private_key_path" {
-  default = "~/.ssh/id_rsa"
+variable "username" {
+  default = "~/keys/user"
+}
+variable "password" {
+  default = "~/keys/password"
 }
 
 variable "public_key_path" {
