@@ -121,7 +121,7 @@ Jira Board
 A risk assessment was perform to analyse and mitigate all potential risk. A table is presented below outlining these risks. 
 Risk Assessment
 
-<img src="Images/risk.png" width="800" height = "400">
+<img src="images/risk.png" width="800" height = "400">
 
 ## Known Issues
 When running a jenkins file that has variables exported. You will need to beaware of methods to mitigate special charaters.  
