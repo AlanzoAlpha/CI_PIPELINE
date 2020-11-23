@@ -3,11 +3,11 @@
 Below is an overview of my project which entails a flaskapp with a get method in a CI pipeline. This document is to aid with the understanding of this project.
 
 ## Table of Content
-* [Objective](#Objective)  
+* [Objective]  
    * [Requirements]
    * [Application Approach ]
    * [Tools Used ]
-   * [Framework]
+* [Framework]
    * [Flask-app Process One, Terraform]
    * [Flask-app Process Two, Ansible]
    * [Flask-app Process Three, Docker Build on Jenkines Pipeline]
@@ -20,12 +20,12 @@ Below is an overview of my project which entails a flaskapp with a get method in
 
 
 ## Objective
-The objective of this project is as outlined below:
+The objectives of this project are as outlined below:
 
 To set up a CI-pipeline that deploys a simple flask-app. I will make use of terraform to build two data bases, one vm and one kubernete cluster. Folowing on, I will use ansible install all the neccessary software onto the vm. Then jenkins will then deploy the app from GitHub and use webhook associated for updates. Using jenking the app is then pushed up to docker hub so that it can be deployed anywhere with kubernetes. I will then use kubernetes to deploy the app. 
 
-- The app is deployed with a deploy shell which automates the terafform infrastructure, and install software in the vms. 
-- Only one vm was used to make the process easier to automate. 
+- The process is deployed with a deploy shell script which automates the terafform infrastructure, and install software in the vms. 
+- Only one vm was used to make the automation process easier to automate. 
 
 The application works by:
 1. The frontend service making a GET request to the backend service. 
@@ -79,36 +79,42 @@ The **Minimum Viable Product** for this project should at least demonstrate the 
 ## Framework
 ### Flask-app Process One, Terraform
 Terraform is use to launch one vm, two databases, and one ekc.
-<img src="Images/unittesting.png" width="800" height = "400">
 
+<img src="images/terraform.png" width="800" height = "400">
 
 ### Flask-app Process Two, Ansible
 Ansible is used to install all the neccessary software on the vm including jenkins.
 
-<img src="Images/unittesting.png" width="800" height = "400">
+<img src="images/ansible1.png" width="800" height = "400">
+<img src="images/ansible2.png" width="800" height = "400">
 
 ### Flask-app Process Three, Docker Build on Jenkines Pipeline
+Result
+<img src="images/result1.png" width="800" height = "400">
 
+Doker Push
+<img src="images/dockers.png" width="800" height = "400">
 
 ### Flask-app Process Four, Testing on Jenkines Pipeline
 The tests are are done for  both the frontend and backend services.
 
+Frontend 
+<img src="images/backend _test.png" width="800" height = "400">
+
+Backend
+<img src="images/backend _test.png" width="800" height = "400">
+
 ### Flask-app Process Five, Run Kubernete Pods
-
-
 
 ###Project Management
 A Jira Board was used to tract this project. It has the capability for monitoring, project collaboration and, project planning and management. The image below shows all my panning and processes.
-<img src="Images/unittesting.png" width="800" height = "400">
+Jira Board
+<img src="images/jira.png" width="800" height = "400">
 
 ### Risk Assessment
-* A risk assessment was perform to analyse and mitigate all potential risk. A table is presented below outlining these risks. 
- * *Risk Assessment*
- <img src="Images/unittesting.png" width="800" height = "400">
-
-
-
-
+A risk assessment was perform to analyse and mitigate all potential risk. A table is presented below outlining these risks. 
+Risk Assessment
+<img src="Images/risk.png" width="800" height = "400">
 
 ## Known Issues
 When running a jenkins file that has variables exported. You will need to beaware of methods to mitigate special charaters.  
