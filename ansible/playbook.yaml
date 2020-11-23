@@ -26,19 +26,43 @@
 
   - name: Installing python3-pip
     apt:
-      name: python3.8
+      name: python-pytest
       state: latest
       update_cache: true
+
+  - name: Installing python-pytest
+    apt:
+      name: python-pytest
+      state: latest
+      update_cache: true
+
+  - name: Installing aswcli
+    apt:
+      name: awscli
+      state: latest
+      update_cache: true
+
+  - name: installing unzip for awscli script
+    apt:
+      name: unzip
+      state: latest
+      update_cache: true
+
+  - name: Installing wget for aws cliscript
+    apt:
+      name: wget
+      state: latest
+      update_cache: true
+
   - name: Installing mysql-client-core-5.7
     apt:
       name: mysql-client-core-5.7
       state: latest
       update_cache: true
 
-  - name: install wget
-    apt:
-      name: wget
-      state: present
+  - name: aws cli permanet 
+    script: ./awscli.sh
+
 
   - name: Import Jenkins Key
     apt_key:
@@ -65,16 +89,16 @@
   - name: Wait for jenkins
     wait_for: timeout=30
 
-  - name: Get init password Jenkins
+  - name: Get init jenkins password
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     changed_when: false
     register: result
 
-  - name: Print init password Jenkins
+  - name: Print init jenkins password
     debug:
       var: result.stdout
 
-  - name: install docker dependencies
+  - name: Install docker dependencies
     apt:
       name: "{{item}}"
       state: present
@@ -89,17 +113,17 @@
         - python3-setuptools
         - virtualenv
 
-  - name: add docker GPG apt key
+  - name: Add docker GPG apt key
     apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
 
-  - name: add docker repository
+  - name: Add docker repository
     apt_repository:
       repo: deb https://download.docker.com/linux/ubuntu bionic stable
       state: present
 
-  - name: install docker
+  - name: Install docker
     apt:
       name: "{{item}}"
       state: latest
@@ -109,14 +133,21 @@
         - docker-ce-cli
         - containerd.io
 
-  - name: start docker
+  - name: Add Docker to group
+    shell: "usermod -aG docker $(whoami)"
+    register: Docker_Group_Add
+
+  - name: Start docker
     service:
       name: docker
       state: started
       enabled: yes
 
+  - name: Docker added to group
+    debug:
+      msg: "Container Output: {{Docker_Group_Add.stdout}}"
 
-  - name: test Docker with hello world example
+  - name: Test Docker with hello world example
     shell: "docker run hello-world"
     register: hello_world_output
 
@@ -135,13 +166,13 @@
       groups: "docker"
       append: "yes"
 
-  - name: install Docker Compose
+  - name: Install docker-compose
     get_url:
       url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
       dest: "/usr/local/bin/docker-compose"
       mode: 0755
 
-  - name: install Ctop
+  - name: Install Ctop
     get_url:
       url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
       dest: "/usr/local/bin/ctop"
@@ -151,7 +182,7 @@
     shell: "sleep 1 && reboot"
     async: 1
     poll: 0
-
+  
   handlers:
   - name: 'restart docker'
     service:
