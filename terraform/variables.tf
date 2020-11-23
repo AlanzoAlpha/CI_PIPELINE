@@ -13,6 +13,14 @@ variable "subnet_cidr_block1" {
   default = "10.0.2.0/24"
 }
 
+variable "subnet_cidr_block2" {
+  default = "10.0.3.0/24"
+}
+
+variable "subnet_cidr_block3" {
+  default = "10.0.4.0/24"
+}
+
 variable "open_internet" {
   default = "0.0.0.0/0"
 }
