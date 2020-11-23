@@ -30,7 +30,7 @@ spec:
         image: meallydavis/backend:latest
         env:
         - name: DATABASE_URI
-          value: "mysql+pymysql://admin:password@xxxxxx.celctewtjof6.eu-west-1.rds.amazonaws.com/users"
+          value: "mysql+pymysql://admin:password@terraform-20201123003146375600000007.cqelbtnl3tpk.eu-west-1.rds.amazonaws.com:3306/users"
         - name: SECRET_KEY
           value: "password"
         ports:
