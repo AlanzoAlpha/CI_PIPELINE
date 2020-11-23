@@ -110,6 +110,11 @@ Backend
 <img src="images/backend _test.png" width="800" height = "400">
 
 ### Flask-app Process Five, Run Kubernete Pods
+Pods
+<img src="images/kubecmd.png" width="800" height = "400">
+
+Kuernete Result
+<img src="images/kuberesults.png" width="800" height = "400">
 
 ###Project Management
 A Jira Board was used to tract this project. It has the capability for monitoring, project collaboration and, project planning and management. The image below shows all my panning and processes.
