@@ -78,7 +78,7 @@ pipeline{
 		    sudo kubectl apply -f frontend.yaml
 		    sudo kubectl apply -f backend.yaml
 		    sudo kubectl apply -f mysql.yaml
-		    sudp kubectl apply -f nginxservice.yaml
+		    sudo kubectl apply -f nginxservice.yaml
                     echo "Done"
                     '''
 
