@@ -85,8 +85,8 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group" "web_sg" {
-  name        = "DefaultSGWeb"
-  description = "Allow SSH"
+  name        = "Default_SGWeb"
+  description = "ssh"
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
@@ -136,13 +136,6 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    description = "HTTPS"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   egress {
     protocol    = -1
@@ -199,8 +192,8 @@ resource "aws_db_instance" "users" {
   engine_version                      = "5.7"
   instance_class                      = "db.t2.micro"
   name                                = "users"
-  username                            = "admin"
-  password                            = "password"
+  username                            = file(var.username)
+  password                            = file(var.password)
   skip_final_snapshot                 = "true"
   publicly_accessible                 = "true"
   port                                = "3306"
@@ -217,8 +210,8 @@ resource "aws_db_instance" "testdb" {
   engine_version                      = "5.7"
   instance_class                      = "db.t2.micro"
   name                                = "testdb"
-  username                            = "admin"
-  password                            = "password"
+  username                            = file(var.username)
+  password                            = file(var.password)
   skip_final_snapshot                 = "true"
   publicly_accessible                 = "true"
   port                                = "3306"
