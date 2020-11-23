@@ -72,12 +72,13 @@ pipeline{
                 steps{
                     sh '''
 		    cd ~/cne-sfia2-brief/
-		    echo "kubectl apply -f secrets.yaml ingnore this line"
+		    sudo kubectl apply -f secrets.yaml
 		    sudo kubectl apply -f deployment.yaml 
 		    sudo kubectl apply -f configmap.yaml
 		    sudo kubectl apply -f frontend.yaml
 		    sudo kubectl apply -f backend.yaml
 		    sudo kubectl apply -f mysql.yaml
+		    sudp kubectl apply -f nginxservice.yaml
                     echo "Done"
                     '''
 
