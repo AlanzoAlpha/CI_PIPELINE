@@ -81,7 +81,7 @@ The **Minimum Viable Product** for this project should at least demonstrate the 
 ### Flask-app Process One, Terraform
 Terraform is use to launch one vm, two databases, and one ekc.
 
-<img src="images/terraform.png" width="600" height = "300">
+<img src="images/terraform.png" width="800" height = "400">
 
 ### Flask-app Process Two, Ansible
 Ansible is used to install all the neccessary software on the vm including jenkins.
@@ -103,7 +103,7 @@ The tests are are done for  both the frontend and backend services.
 
 Frontend 
 
-<img src="images/backend _test.png" width="800" height = "400">
+<img src="images/frontend_test.png" width="800" height = "400">
 
 Backend
 
